@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaInicio(irParaMenu: () -> Unit) {
+fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(26, 15, 38)
@@ -124,13 +122,13 @@ fun TelaInicio(irParaMenu: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Cartaz("OUTER BANKS", Color(62, 92, 118), true)
-                    Cartaz("O MENTALISTA", Color(140, 28, 19), true)
-                    Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), false)
+                    Cartaz("OUTER BANKS", Color(62, 92, 118), "TOP 10")
+                    Cartaz("O MENTALISTA", Color(140, 28, 19), "TOP 10")
+                    Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), "")
                 }
             }
 
-            BarraInferior(irParaMenu)
+            BarraInferior("inicio", {}, irParaBuscar, irParaMenu)
         }
     }
 }
@@ -169,7 +167,7 @@ fun BotaoBanner(texto: String, cor: Color, corTexto: Color) {
 }
 
 @Composable
-fun Cartaz(titulo: String, cor: Color, top10: Boolean) {
+fun Cartaz(titulo: String, cor: Color, selo: String) {
     Surface(
         modifier = Modifier.width(108.dp).height(140.dp),
         shape = RoundedCornerShape(4.dp),
@@ -179,10 +177,10 @@ fun Cartaz(titulo: String, cor: Color, top10: Boolean) {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            if (top10) {
+            if (selo == "TOP 10") {
                 Surface(color = Color(229, 9, 20)) {
                     Text(
-                        text = "TOP 10",
+                        text = selo,
                         color = Color(255, 255, 255),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
@@ -205,7 +203,23 @@ fun Cartaz(titulo: String, cor: Color, top10: Boolean) {
 }
 
 @Composable
-fun BarraInferior(irParaMenu: () -> Unit) {
+fun ItemBarra(texto: String, tela: String, telaAtual: String, aoClicar: () -> Unit) {
+    Surface(
+        modifier = Modifier.clickable(onClick = { aoClicar() }),
+        shape = RoundedCornerShape(24.dp),
+        color = if (tela == telaAtual) Color(255, 255, 255) else Color(43, 43, 43)
+    ) {
+        Text(
+            text = texto,
+            color = if (tela == telaAtual) Color.Black else Color(179, 179, 179),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(10.dp)
+        )
+    }
+}
+
+@Composable
+fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         shape = RoundedCornerShape(30.dp),
@@ -216,40 +230,28 @@ fun BarraInferior(irParaMenu: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Surface(
-                shape = RoundedCornerShape(24.dp),
-                color = Color(255, 255, 255)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Icon(imageVector = Icons.Default.Home, contentDescription = "Inicio")
-                    Text(
-                        text = "Inicio",
-                        color = Color.Black,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-
-            Text(
-                text = "Clipes",
-                color = Color(179, 179, 179),
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Text(
-                text = "Buscar",
-                color = Color(179, 179, 179),
-                style = MaterialTheme.typography.bodyMedium
-            )
+            ItemBarra("Inicio", "inicio", telaAtual, irParaInicio)
+            ItemBarra("Clipes", "clipes", telaAtual, {})
+            ItemBarra("Buscar", "buscar", telaAtual, irParaBuscar)
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.clickable(onClick = { irParaMenu() })
             ) {
-                Avatar("L", Color(232, 176, 4), 24)
+                Surface(
+                    modifier = Modifier.size(24.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    color = Color(232, 176, 4)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "L",
+                            color = Color(255, 255, 255),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
                 Text(
                     text = "Minha Netflix",
                     color = Color(255, 255, 255),

@@ -97,9 +97,9 @@ fun TelaPerfis(irParaInicio: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Perfil("M", "Manu", Color(138, 43, 226), 92, irParaInicio)
-            Perfil("R", "Rsjr", Color(46, 158, 91), 92, irParaInicio)
-            Perfil("B", "buarda", Color(224, 70, 140), 92, irParaInicio)
+            Perfil("M", "Manu", Color(138, 43, 226), Modifier.size(92.dp), irParaInicio)
+            Perfil("R", "Rsjr", Color(46, 158, 91), Modifier.size(92.dp), irParaInicio)
+            Perfil("B", "buarda", Color(224, 70, 140), Modifier.size(92.dp), irParaInicio)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -108,8 +108,8 @@ fun TelaPerfis(irParaInicio: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Perfil("L", "lau", Color(232, 176, 4), 92, irParaInicio)
-            Perfil("G", "Gabi", Color(74, 107, 138), 92, irParaInicio)
+            Perfil("L", "lau", Color(232, 176, 4), Modifier.size(92.dp), irParaInicio)
+            Perfil("G", "Gabi", Color(74, 107, 138), Modifier.size(92.dp), irParaInicio)
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Surface(
@@ -154,9 +154,9 @@ fun Time(sigla: String, cor: Color, corTexto: Color) {
 }
 
 @Composable
-fun Avatar(letra: String, cor: Color, tamanho: Int) {
+fun Avatar(letra: String, cor: Color, modifier: Modifier) {
     Surface(
-        modifier = Modifier.size(tamanho.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(10.dp),
         color = cor
     ) {
@@ -164,7 +164,7 @@ fun Avatar(letra: String, cor: Color, tamanho: Int) {
             Text(
                 text = letra,
                 color = Color(255, 255, 255),
-                style = if (tamanho > 30) MaterialTheme.typography.headlineMedium else MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -172,12 +172,12 @@ fun Avatar(letra: String, cor: Color, tamanho: Int) {
 }
 
 @Composable
-fun Perfil(letra: String, nome: String, cor: Color, tamanho: Int, aoClicar: () -> Unit) {
+fun Perfil(letra: String, nome: String, cor: Color, modifier: Modifier, aoClicar: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.clickable(onClick = { aoClicar() })
     ) {
-        Avatar(letra, cor, tamanho)
+        Avatar(letra, cor, modifier)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = nome,

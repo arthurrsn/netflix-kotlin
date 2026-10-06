@@ -71,7 +71,7 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Avatar("L", Color(232, 176, 4), 80)
+                Avatar("L", Color(232, 176, 4), Modifier.size(80.dp))
 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -98,10 +98,10 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Perfil("M", "Manu", Color(138, 43, 226), 64, {})
-            Perfil("R", "Rsjr", Color(46, 158, 91), 64, {})
-            Perfil("B", "buarda", Color(224, 70, 140), 64, {})
-            Perfil("G", "Gabi", Color(74, 107, 138), 64, {})
+            Perfil("M", "Manu", Color(138, 43, 226), Modifier.size(64.dp), {})
+            Perfil("R", "Rsjr", Color(46, 158, 91), Modifier.size(64.dp), {})
+            Perfil("B", "buarda", Color(224, 70, 140), Modifier.size(64.dp), {})
+            Perfil("G", "Gabi", Color(74, 107, 138), Modifier.size(64.dp), {})
         }
 
         Spacer(modifier = Modifier.height(16.dp))
