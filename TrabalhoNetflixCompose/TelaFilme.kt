@@ -37,7 +37,7 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
     val context = LocalContext.current
 
     Scaffold(
-        bottomBar = { BarraInferior("filme", irParaInicio, irParaBuscar, irParaMenu) }
+        bottomBar = { BarraInferior("filme", viewModel.perfilAtual, irParaInicio, irParaBuscar, irParaMenu) }
     ) { innerPadding ->
 
         Surface(

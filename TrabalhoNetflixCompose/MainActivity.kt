@@ -59,6 +59,7 @@ fun App() {
 
             composable("buscar") {
                 TelaBuscar(
+                    viewModel = viewModel,
                     filmeViewModel = filmeViewModel,
                     irParaInicio = { navController.navigate("inicio") },
                     irParaMenu = { navController.navigate("menu") },
@@ -79,6 +80,7 @@ fun App() {
 
             composable("downloads") {
                 TelaDownloads(
+                    viewModel = viewModel,
                     filmeViewModel = filmeViewModel,
                     irParaInicio = { navController.navigate("inicio") },
                     irParaBuscar = { navController.navigate("buscar") },

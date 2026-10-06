@@ -31,13 +31,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaBuscar(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
+fun TelaBuscar(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
 
     var busca by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Scaffold(
-        bottomBar = { BarraInferior("buscar", irParaInicio, {}, irParaMenu) }
+        bottomBar = { BarraInferior("buscar", viewModel.perfilAtual, irParaInicio, {}, irParaMenu) }
     ) { innerPadding ->
 
         Surface(

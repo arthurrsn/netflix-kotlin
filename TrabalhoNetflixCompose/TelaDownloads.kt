@@ -26,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaDownloads(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
+fun TelaDownloads(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
     Scaffold(
-        bottomBar = { BarraInferior("downloads", irParaInicio, irParaBuscar, irParaMenu) }
+        bottomBar = { BarraInferior("downloads", viewModel.perfilAtual, irParaInicio, irParaBuscar, irParaMenu) }
     ) { innerPadding ->
 
         Surface(

@@ -150,7 +150,7 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                 }
             }
 
-            BarraInferior("inicio", {}, irParaBuscar, irParaMenu)
+            BarraInferior("inicio", viewModel.perfilAtual, {}, irParaBuscar, irParaMenu)
         }
     }
 }
@@ -239,7 +239,7 @@ fun ItemBarra(texto: String, tela: String, telaAtual: String, aoClicar: () -> Un
 }
 
 @Composable
-fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+fun BarraInferior(telaAtual: String, perfil: String, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         shape = RoundedCornerShape(30.dp),
@@ -258,7 +258,7 @@ fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.clickable(onClick = { irParaMenu() })
             ) {
-                Avatar("", Color(232, 176, 4), Modifier.size(24.dp))
+                Avatar(perfil, Color(232, 176, 4), Modifier.size(24.dp))
                 Text(
                     text = "Minha Netflix",
                     color = MaterialTheme.colorScheme.onPrimary,
