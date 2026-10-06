@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(26, 15, 38)
@@ -100,8 +100,8 @@ fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceAround
                             ) {
-                                BotaoBanner("Assistir", Color(255, 255, 255), Color.Black)
-                                BotaoBanner("+ Minha lista", Color(0, 0, 0, 85), Color(255, 255, 255))
+                                BotaoBanner("Assistir", Color(255, 255, 255), Color.Black, Modifier.width(140.dp))
+                                BotaoBanner("+ Minha lista", Color(0, 0, 0, 85), Color(255, 255, 255), Modifier.width(140.dp))
                             }
                         }
                     }
@@ -122,9 +122,9 @@ fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Cartaz("OUTER BANKS", Color(62, 92, 118), "TOP 10")
-                    Cartaz("O MENTALISTA", Color(140, 28, 19), "TOP 10")
-                    Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), "")
+                    Cartaz("OUTER BANKS", Color(62, 92, 118), "TOP 10", irParaFilme)
+                    Cartaz("O MENTALISTA", Color(140, 28, 19), "TOP 10", {})
+                    Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), "", {})
                 }
             }
 
@@ -149,9 +149,9 @@ fun Filtro(texto: String) {
 }
 
 @Composable
-fun BotaoBanner(texto: String, cor: Color, corTexto: Color) {
+fun BotaoBanner(texto: String, cor: Color, corTexto: Color, modifier: Modifier) {
     Surface(
-        modifier = Modifier.width(140.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(6.dp),
         color = cor
     ) {
@@ -167,9 +167,12 @@ fun BotaoBanner(texto: String, cor: Color, corTexto: Color) {
 }
 
 @Composable
-fun Cartaz(titulo: String, cor: Color, selo: String) {
+fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
     Surface(
-        modifier = Modifier.width(108.dp).height(140.dp),
+        modifier = Modifier
+            .width(108.dp)
+            .height(140.dp)
+            .clickable(onClick = { aoClicar() }),
         shape = RoundedCornerShape(4.dp),
         color = cor
     ) {

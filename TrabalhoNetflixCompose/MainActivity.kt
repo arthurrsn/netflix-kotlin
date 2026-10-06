@@ -37,7 +37,10 @@ fun App() {
             TelaPerfis(irParaInicio = { tela = "inicio" })
         }
         if (tela == "inicio") {
-            TelaInicio(irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+            TelaInicio(irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
+        }
+        if (tela == "filme") {
+            TelaFilme(irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
         }
         if (tela == "buscar") {
             TelaBuscar(irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" })
