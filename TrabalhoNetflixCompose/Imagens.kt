@@ -33,6 +33,7 @@ fun Capa(nome: String) {
     if (nome == "Clube da luta") { Foto(R.drawable.capa_clube_da_luta) } else { Spacer(modifier = Modifier.height(0.dp)) }
     if (nome == "Interestelar") { Foto(R.drawable.capa_interestelar) } else { Spacer(modifier = Modifier.height(0.dp)) }
     if (nome == "Matrix") { Foto(R.drawable.capa_matrix) } else { Spacer(modifier = Modifier.height(0.dp)) }
+    if (nome == "GRAND THEFT AUTO") { Foto(R.drawable.capa_gta) } else { Spacer(modifier = Modifier.height(0.dp)) }
     if (nome == "A lista de Schindler") { Foto(R.drawable.capa_schindler) } else { Spacer(modifier = Modifier.height(0.dp)) }
 }
 

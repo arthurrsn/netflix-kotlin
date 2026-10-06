@@ -179,13 +179,13 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Cartaz("O Mentalista", Color(140, 28, 19), "") {
+                        Cartaz("O Mentalista", Color(140, 28, 19)) {
                             filmeViewModel.selecionar("O Mentalista")
                         }
-                        Cartaz("The Vampire Diaries", Color(46, 42, 79), "") {
+                        Cartaz("The Vampire Diaries", Color(46, 42, 79)) {
                             filmeViewModel.selecionar("The Vampire Diaries")
                         }
-                        Cartaz("Bird Box", Color(75, 96, 67), "") {
+                        Cartaz("Bird Box", Color(75, 96, 67)) {
                             filmeViewModel.selecionar("Bird Box")
                         }
                     }

@@ -75,6 +75,7 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                     shape = RoundedCornerShape(6.dp),
                     color = Color(123, 74, 158)
                 ) {
+                    Capa("GRAND THEFT AUTO")
                     Column(
                         modifier = Modifier.fillMaxSize().padding(16.dp),
                         verticalArrangement = Arrangement.SpaceBetween,
@@ -128,15 +129,15 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Cartaz("Outer Banks", Color(62, 92, 118), "TOP 10") {
+                    Cartaz("Outer Banks", Color(62, 92, 118)) {
                         filmeViewModel.selecionar("Outer Banks")
                         irParaFilme()
                     }
-                    Cartaz("O Mentalista", Color(140, 28, 19), "TOP 10") {
+                    Cartaz("O Mentalista", Color(140, 28, 19)) {
                         filmeViewModel.selecionar("O Mentalista")
                         irParaFilme()
                     }
-                    Cartaz("The Vampire Diaries", Color(46, 42, 79), "") {
+                    Cartaz("The Vampire Diaries", Color(46, 42, 79)) {
                         filmeViewModel.selecionar("The Vampire Diaries")
                         irParaFilme()
                     }
@@ -182,7 +183,7 @@ fun BotaoBanner(texto: String, modifier: Modifier) {
 }
 
 @Composable
-fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
+fun Cartaz(titulo: String, cor: Color, aoClicar: () -> Unit) {
     Surface(
         modifier = Modifier
             .width(108.dp)
@@ -207,22 +208,6 @@ fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
         }
 
         Capa(titulo)
-
-        Column(modifier = Modifier.fillMaxSize()) {
-            if (selo == "TOP 10") {
-                Surface(color = Color(229, 9, 20)) {
-                    Text(
-                        text = selo,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(2.dp)
-                    )
-                }
-            } else {
-                Spacer(modifier = Modifier.height(1.dp))
-            }
-        }
     }
 }
 
