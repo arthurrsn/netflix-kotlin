@@ -171,7 +171,7 @@ fun BotaoBanner(texto: String, cor: Color, corTexto: Color) {
 @Composable
 fun Cartaz(titulo: String, cor: Color, top10: Boolean) {
     Surface(
-        modifier = Modifier.width(100.dp).height(140.dp),
+        modifier = Modifier.width(108.dp).height(140.dp),
         shape = RoundedCornerShape(4.dp),
         color = cor
     ) {
@@ -198,7 +198,7 @@ fun Cartaz(titulo: String, cor: Color, top10: Boolean) {
                 color = Color(255, 255, 255),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(6.dp)
+                modifier = Modifier.padding(3.dp)
             )
         }
     }
