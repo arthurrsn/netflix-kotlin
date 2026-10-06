@@ -80,7 +80,7 @@ fun TelaBuscar(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaM
                         shape = RoundedCornerShape(6.dp),
                         color = Color(122, 122, 122)
                     ) {
-
+                        Capa("A lista de Schindler")
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Column {
@@ -130,7 +130,7 @@ fun ItemFilme(nomeFilme: String, aoClicar: () -> Unit) {
             shape = RoundedCornerShape(20.dp),
             color = Color(62, 92, 118)
         ) {
-
+            Capa(nomeFilme)
         }
         Spacer(modifier = Modifier.width(16.dp))
         Text(

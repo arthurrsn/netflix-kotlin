@@ -136,6 +136,7 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
                 ) {
                     Spacer(modifier = Modifier.width(16.dp))
                     Avatar(
+                        it,
                         if (it == viewModel.perfilAtual) Color(232, 176, 4) else Color(74, 107, 138),
                         Modifier.size(56.dp)
                     )
@@ -172,7 +173,7 @@ fun Time(sigla: String, cor: Color) {
 }
 
 @Composable
-fun Avatar(cor: Color, modifier: Modifier) {
+fun Avatar(nome: String, cor: Color, modifier: Modifier) {
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(10.dp),
@@ -184,6 +185,7 @@ fun Avatar(cor: Color, modifier: Modifier) {
                 contentDescription = "Perfil"
             )
         }
+        FotoPerfil(nome)
     }
 }
 
@@ -193,7 +195,7 @@ fun Perfil(nome: String, cor: Color, modifier: Modifier, aoClicar: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.clickable(onClick = { aoClicar() })
     ) {
-        Avatar(cor, modifier)
+        Avatar(nome, cor, modifier)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = nome,

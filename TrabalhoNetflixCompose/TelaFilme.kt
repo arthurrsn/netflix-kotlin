@@ -53,6 +53,7 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                     modifier = Modifier.fillMaxWidth().height(120.dp),
                     color = Color(62, 92, 118)
                 ) {
+                    Capa(filmeViewModel.filmeAtual)
                     Box(contentAlignment = Alignment.Center) {
                         Text(
                             text = "▶ Assistir",

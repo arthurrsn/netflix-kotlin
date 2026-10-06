@@ -195,6 +195,20 @@ fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Spacer(modifier = Modifier.height(1.dp))
+
+            Text(
+                text = titulo,
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(3.dp)
+            )
+        }
+
+        Capa(titulo)
+
+        Column(modifier = Modifier.fillMaxSize()) {
             if (selo == "TOP 10") {
                 Surface(color = Color(229, 9, 20)) {
                     Text(
@@ -208,14 +222,6 @@ fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
             } else {
                 Spacer(modifier = Modifier.height(1.dp))
             }
-
-            Text(
-                text = titulo,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(3.dp)
-            )
         }
     }
 }
@@ -256,7 +262,7 @@ fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.clickable(onClick = { irParaMenu() })
             ) {
-                Avatar(Color(232, 176, 4), Modifier.size(24.dp))
+                Avatar("", Color(232, 176, 4), Modifier.size(24.dp))
                 Text(
                     text = "Minha Netflix",
                     color = MaterialTheme.colorScheme.onPrimary,

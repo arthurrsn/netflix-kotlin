@@ -45,7 +45,7 @@ fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, i
                 modifier = Modifier.fillMaxWidth().padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Avatar(Color(232, 176, 4), Modifier.size(80.dp))
+                Avatar(viewModel.perfilAtual, Color(232, 176, 4), Modifier.size(80.dp))
 
                 Spacer(modifier = Modifier.height(12.dp))
 

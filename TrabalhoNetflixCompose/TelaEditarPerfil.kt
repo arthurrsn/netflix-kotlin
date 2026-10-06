@@ -46,7 +46,7 @@ fun TelaEditarPerfil(viewModel: PerfilViewModel, voltar: () -> Unit, irParaPerfi
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            Avatar(Color(232, 176, 4), Modifier.size(80.dp))
+            Avatar(viewModel.perfilAtual, Color(232, 176, 4), Modifier.size(80.dp))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
