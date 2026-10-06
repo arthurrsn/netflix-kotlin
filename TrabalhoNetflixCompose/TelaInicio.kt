@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
+fun TelaInicio(viewModel: PerfilViewModel, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(26, 15, 38)
@@ -45,7 +45,7 @@ fun TelaInicio(irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: ()
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Inicio",
+                        text = "Para ${viewModel.perfilAtual}",
                         color = Color(255, 255, 255),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
@@ -241,20 +241,7 @@ fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.clickable(onClick = { irParaMenu() })
             ) {
-                Surface(
-                    modifier = Modifier.size(24.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    color = Color(232, 176, 4)
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(
-                            text = "L",
-                            color = Color(255, 255, 255),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
+                Avatar(Color(232, 176, 4), Modifier.size(24.dp))
                 Text(
                     text = "Minha Netflix",
                     color = Color(255, 255, 255),

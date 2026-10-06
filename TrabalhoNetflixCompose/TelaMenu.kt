@@ -28,37 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
+fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, irParaEditar: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Spacer(modifier = Modifier.height(30.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Surface(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clickable(onClick = { voltar() }),
-                shape = RoundedCornerShape(18.dp),
-                color = Color(255, 255, 255)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Voltar"
-                    )
-                }
-            }
-            Text(
-                text = "Perfis",
-                color = Color(255, 255, 255),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.width(36.dp))
-        }
+        Cabecalho("Perfis", voltar)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -71,23 +45,15 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Avatar("L", Color(232, 176, 4), Modifier.size(80.dp))
+                Avatar(Color(232, 176, 4), Modifier.size(80.dp))
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "lau",
+                    text = viewModel.perfilAtual,
                     color = Color(255, 255, 255),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(6.dp))
-
-                Text(
-                    text = "Lalaspaine",
-                    color = Color(179, 179, 179),
-                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -98,10 +64,14 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Perfil("M", "Manu", Color(138, 43, 226), Modifier.size(64.dp), {})
-            Perfil("R", "Rsjr", Color(46, 158, 91), Modifier.size(64.dp), {})
-            Perfil("B", "buarda", Color(224, 70, 140), Modifier.size(64.dp), {})
-            Perfil("G", "Gabi", Color(74, 107, 138), Modifier.size(64.dp), {})
+            viewModel.perfis.forEach {
+                Perfil(
+                    it,
+                    if (it == viewModel.perfilAtual) Color(232, 176, 4) else Color(74, 107, 138),
+                    Modifier.size(48.dp),
+                    { viewModel.selecionar(it) }
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -111,11 +81,12 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Surface(
+                modifier = Modifier.clickable(onClick = { irParaEditar() }),
                 shape = RoundedCornerShape(24.dp),
                 color = Color(43, 43, 43)
             ) {
                 Text(
-                    text = "Gerenciar perfis",
+                    text = "Editar perfil",
                     color = Color(255, 255, 255),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(12.dp)
@@ -142,6 +113,37 @@ fun TelaMenu(voltar: () -> Unit, sair: () -> Unit) {
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun Cabecalho(titulo: String, voltar: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Surface(
+            modifier = Modifier
+                .size(36.dp)
+                .clickable(onClick = { voltar() }),
+            shape = RoundedCornerShape(18.dp),
+            color = Color(255, 255, 255)
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Voltar"
+                )
+            }
+        }
+        Text(
+            text = titulo,
+            color = Color(255, 255, 255),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.width(36.dp))
     }
 }
 

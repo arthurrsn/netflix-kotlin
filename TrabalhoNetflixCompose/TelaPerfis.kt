@@ -12,26 +12,36 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaPerfis(irParaInicio: () -> Unit) {
+fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
+
+    var novoPerfil by remember { mutableStateOf("") }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Surface(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            modifier = Modifier.fillMaxWidth().height(160.dp),
             color = Color(46, 125, 50)
         ) {
             Row(
@@ -52,10 +62,8 @@ fun TelaPerfis(irParaInicio: () -> Unit) {
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -70,67 +78,66 @@ fun TelaPerfis(irParaInicio: () -> Unit) {
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                text = "NFL",
-                color = Color(255, 255, 255),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "Evento ao vivo - 10 de setembro, as 19h30 (horario de Brasilia)",
-                color = Color(255, 255, 255),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
-            )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Escolha o seu perfil",
                 color = Color(179, 179, 179),
                 style = MaterialTheme.typography.bodyLarge
             )
-        }
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Perfil("M", "Manu", Color(138, 43, 226), Modifier.size(92.dp), irParaInicio)
-            Perfil("R", "Rsjr", Color(46, 158, 91), Modifier.size(92.dp), irParaInicio)
-            Perfil("B", "buarda", Color(224, 70, 140), Modifier.size(92.dp), irParaInicio)
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Perfil("L", "lau", Color(232, 176, 4), Modifier.size(92.dp), irParaInicio)
-            Perfil("G", "Gabi", Color(74, 107, 138), Modifier.size(92.dp), irParaInicio)
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Surface(
-                    modifier = Modifier.size(92.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    color = Color(179, 179, 179)
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Editar"
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Editar",
-                    color = Color(179, 179, 179),
-                    style = MaterialTheme.typography.bodyMedium
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TextField(
+                    modifier = Modifier.width(220.dp),
+                    value = novoPerfil,
+                    onValueChange = { novoPerfil = it },
+                    placeholder = { Text("Novo perfil") }
                 )
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        if (novoPerfil != "") {
+                            viewModel.adicionar(novoPerfil)
+                            novoPerfil = ""
+                        }
+                    }
+                ) {
+                    Text("Add")
+                }
             }
+        }
+
+        LazyColumn {
+
+            items(viewModel.perfis) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clickable(
+                            onClick = {
+                                viewModel.selecionar(it)
+                                irParaInicio()
+                            }
+                        ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Avatar(
+                        if (it == viewModel.perfilAtual) Color(232, 176, 4) else Color(74, 107, 138),
+                        Modifier.size(56.dp)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = it,
+                        color = Color(255, 255, 255),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
         }
     }
 }
@@ -154,30 +161,28 @@ fun Time(sigla: String, cor: Color, corTexto: Color) {
 }
 
 @Composable
-fun Avatar(letra: String, cor: Color, modifier: Modifier) {
+fun Avatar(cor: Color, modifier: Modifier) {
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(10.dp),
         color = cor
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Text(
-                text = letra,
-                color = Color(255, 255, 255),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = "Perfil"
             )
         }
     }
 }
 
 @Composable
-fun Perfil(letra: String, nome: String, cor: Color, modifier: Modifier, aoClicar: () -> Unit) {
+fun Perfil(nome: String, cor: Color, modifier: Modifier, aoClicar: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.clickable(onClick = { aoClicar() })
     ) {
-        Avatar(letra, cor, modifier)
+        Avatar(cor, modifier)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = nome,

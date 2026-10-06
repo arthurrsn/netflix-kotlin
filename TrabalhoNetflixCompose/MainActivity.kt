@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,25 +29,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
     var tela by remember { mutableStateOf("perfis") }
+    val viewModel: PerfilViewModel = viewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black
     ) {
         if (tela == "perfis") {
-            TelaPerfis(irParaInicio = { tela = "inicio" })
+            TelaPerfis(viewModel = viewModel, irParaInicio = { tela = "inicio" })
         }
         if (tela == "inicio") {
-            TelaInicio(irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
-        }
-        if (tela == "filme") {
-            TelaFilme(irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+            TelaInicio(viewModel = viewModel, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
         }
         if (tela == "buscar") {
             TelaBuscar(irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" })
         }
+        if (tela == "filme") {
+            TelaFilme(irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+        }
         if (tela == "menu") {
-            TelaMenu(voltar = { tela = "inicio" }, sair = { tela = "perfis" })
+            TelaMenu(viewModel = viewModel, voltar = { tela = "inicio" }, sair = { tela = "perfis" }, irParaEditar = { tela = "editar" })
+        }
+        if (tela == "editar") {
+            TelaEditarPerfil(viewModel = viewModel, voltar = { tela = "menu" }, irParaPerfis = { tela = "perfis" })
         }
     }
 }
