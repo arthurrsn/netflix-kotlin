@@ -76,6 +76,12 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                     color = Color(123, 74, 158)
                 ) {
                     Capa("GRAND THEFT AUTO")
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = Color(0, 0, 0, 150)
+                    ) {
+
+                    }
                     Column(
                         modifier = Modifier.fillMaxSize().padding(16.dp),
                         verticalArrangement = Arrangement.SpaceBetween,
@@ -192,22 +198,27 @@ fun Cartaz(titulo: String, cor: Color, aoClicar: () -> Unit) {
         shape = RoundedCornerShape(4.dp),
         color = cor
     ) {
+        Capa(titulo)
+
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Spacer(modifier = Modifier.height(1.dp))
 
-            Text(
-                text = titulo,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(3.dp)
-            )
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color(0, 0, 0, 170)
+            ) {
+                Text(
+                    text = titulo,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(3.dp)
+                )
+            }
         }
-
-        Capa(titulo)
     }
 }
 
