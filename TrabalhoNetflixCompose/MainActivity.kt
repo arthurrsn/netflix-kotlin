@@ -72,7 +72,8 @@ fun App() {
                     filmeViewModel = filmeViewModel,
                     irParaInicio = { navController.navigate("inicio") },
                     irParaBuscar = { navController.navigate("buscar") },
-                    irParaMenu = { navController.navigate("menu") }
+                    irParaMenu = { navController.navigate("menu") },
+                    voltar = { navController.popBackStack() }
                 )
             }
 

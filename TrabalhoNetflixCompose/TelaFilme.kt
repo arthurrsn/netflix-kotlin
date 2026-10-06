@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, voltar: () -> Unit) {
 
     var novoNome by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -153,7 +153,7 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                                 Button(
                                     onClick = {
                                         filmeViewModel.excluir()
-                                        irParaInicio()
+                                        voltar()
                                     }
                                 ) {
                                     Text("Excluir filme")
