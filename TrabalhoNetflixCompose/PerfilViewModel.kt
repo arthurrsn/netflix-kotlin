@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 
 class PerfilViewModel : ViewModel() {
 
-    val perfis = mutableStateListOf("Manu", "Rsjr", "buarda", "lau", "Gabi")
+    val perfis = mutableStateListOf("Manu", "Rsjr", "buarda", "lau", "Gabi", "Admin")
 
     val nomesAdmin = mutableStateListOf(
         "admin", "admiN", "admIn", "admIN",
