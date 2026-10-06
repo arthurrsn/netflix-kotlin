@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, irParaEditar: () -> Unit) {
+fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, irParaEditar: () -> Unit, irParaDownloads: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -98,7 +98,7 @@ fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, i
 
         ItemMenu("Configuracoes do aplicativo", {})
         Spacer(modifier = Modifier.height(8.dp))
-        ItemMenu("Conta", {})
+        ItemMenu("Downloads", irParaDownloads)
         Spacer(modifier = Modifier.height(8.dp))
         ItemMenu("Ajuda", {})
         Spacer(modifier = Modifier.height(8.dp))

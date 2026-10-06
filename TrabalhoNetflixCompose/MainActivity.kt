@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
 fun App() {
     var tela by remember { mutableStateOf("perfis") }
     val viewModel: PerfilViewModel = viewModel()
+    val filmeViewModel: FilmeViewModel = viewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -39,16 +40,19 @@ fun App() {
             TelaPerfis(viewModel = viewModel, irParaInicio = { tela = "inicio" })
         }
         if (tela == "inicio") {
-            TelaInicio(viewModel = viewModel, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
+            TelaInicio(viewModel = viewModel, filmeViewModel = filmeViewModel, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
         }
         if (tela == "buscar") {
-            TelaBuscar(irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" })
+            TelaBuscar(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
         }
         if (tela == "filme") {
-            TelaFilme(irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+            TelaFilme(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+        }
+        if (tela == "downloads") {
+            TelaDownloads(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
         }
         if (tela == "menu") {
-            TelaMenu(viewModel = viewModel, voltar = { tela = "inicio" }, sair = { tela = "perfis" }, irParaEditar = { tela = "editar" })
+            TelaMenu(viewModel = viewModel, voltar = { tela = "inicio" }, sair = { tela = "perfis" }, irParaEditar = { tela = "editar" }, irParaDownloads = { tela = "downloads" })
         }
         if (tela == "editar") {
             TelaEditarPerfil(viewModel = viewModel, voltar = { tela = "menu" }, irParaPerfis = { tela = "perfis" })

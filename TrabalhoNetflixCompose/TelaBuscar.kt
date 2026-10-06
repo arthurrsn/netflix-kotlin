@@ -1,5 +1,6 @@
 package com.example.netflix
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -18,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,12 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaBuscar(irParaInicio: () -> Unit, irParaMenu: () -> Unit) {
+fun TelaBuscar(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
 
     var busca by remember { mutableStateOf("") }
-    val listaDeFilmes = remember {
-        mutableStateListOf("Bird Box", "Seven", "Clube da luta", "Interestelar", "O Poderoso Chefao", "Matrix")
-    }
 
     Scaffold(
         bottomBar = { BarraInferior("buscar", irParaInicio, {}, irParaMenu) }
@@ -50,12 +48,25 @@ fun TelaBuscar(irParaInicio: () -> Unit, irParaMenu: () -> Unit) {
                     .padding(innerPadding)
                     .padding(16.dp)
             ) {
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = busca,
-                    onValueChange = { busca = it },
-                    placeholder = { Text("Buscar") }
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    TextField(
+                        modifier = Modifier.width(240.dp),
+                        value = busca,
+                        onValueChange = { busca = it },
+                        placeholder = { Text("Buscar ou adicionar") }
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        onClick = {
+                            if (busca != "") {
+                                filmeViewModel.adicionar(busca)
+                                busca = ""
+                            }
+                        }
+                    ) {
+                        Text("Add")
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -89,8 +100,11 @@ fun TelaBuscar(irParaInicio: () -> Unit, irParaMenu: () -> Unit) {
 
                 LazyColumn {
 
-                    items(listaDeFilmes) {
-                        ItemFilme(it)
+                    items(filmeViewModel.filmes) {
+                        ItemFilme(it) {
+                            filmeViewModel.selecionar(it)
+                            irParaFilme()
+                        }
                     }
 
                 }
@@ -100,9 +114,11 @@ fun TelaBuscar(irParaInicio: () -> Unit, irParaMenu: () -> Unit) {
 }
 
 @Composable
-fun ItemFilme(nomeFilme: String) {
+fun ItemFilme(nomeFilme: String, aoClicar: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(6.dp),
+        modifier = Modifier
+            .padding(6.dp)
+            .clickable(onClick = { aoClicar() }),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Surface(

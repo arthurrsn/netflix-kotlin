@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaInicio(viewModel: PerfilViewModel, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
+fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaBuscar: () -> Unit, irParaMenu: () -> Unit, irParaFilme: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(26, 15, 38)
@@ -122,9 +122,18 @@ fun TelaInicio(viewModel: PerfilViewModel, irParaBuscar: () -> Unit, irParaMenu:
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Cartaz("OUTER BANKS", Color(62, 92, 118), "TOP 10", irParaFilme)
-                    Cartaz("O MENTALISTA", Color(140, 28, 19), "TOP 10", {})
-                    Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), "", {})
+                    Cartaz("Outer Banks", Color(62, 92, 118), "TOP 10") {
+                        filmeViewModel.selecionar("Outer Banks")
+                        irParaFilme()
+                    }
+                    Cartaz("O Mentalista", Color(140, 28, 19), "TOP 10") {
+                        filmeViewModel.selecionar("O Mentalista")
+                        irParaFilme()
+                    }
+                    Cartaz("The Vampire Diaries", Color(46, 42, 79), "") {
+                        filmeViewModel.selecionar("The Vampire Diaries")
+                        irParaFilme()
+                    }
                 }
             }
 

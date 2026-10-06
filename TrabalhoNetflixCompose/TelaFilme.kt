@@ -1,5 +1,7 @@
 package com.example.netflix
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,21 +11,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaFilme(irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+fun TelaFilme(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+
+    var novoNome by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
     Scaffold(
         bottomBar = { BarraInferior("filme", irParaInicio, irParaBuscar, irParaMenu) }
     ) { innerPadding ->
@@ -38,7 +49,7 @@ fun TelaFilme(irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: ()
                     .padding(innerPadding)
             ) {
                 Surface(
-                    modifier = Modifier.fillMaxWidth().height(180.dp),
+                    modifier = Modifier.fillMaxWidth().height(120.dp),
                     color = Color(62, 92, 118)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
@@ -53,48 +64,42 @@ fun TelaFilme(irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: ()
 
                 Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     Text(
-                        text = "Outer Banks",
+                        text = filmeViewModel.filmeAtual,
                         color = Color(255, 255, 255),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = "2015",
-                            color = Color(255, 255, 255),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Surface(
-                            shape = RoundedCornerShape(4.dp),
-                            color = Color(255, 255, 255)
-                        ) {
+                    filmeViewModel.baixados.forEach {
+                        if (it == filmeViewModel.filmeAtual) {
                             Text(
-                                text = "14",
-                                color = Color.Black,
+                                text = "Baixado",
+                                color = Color(46, 158, 91),
                                 style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(2.dp)
+                                fontWeight = FontWeight.Bold
                             )
                         }
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = "7 temporadas",
-                            color = Color(255, 255, 255),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
-                        )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     BotaoBanner("▶ Assistir", Color(255, 255, 255), Color.Black, Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.height(8.dp))
-                    BotaoBanner("↓ Baixar", Color(255, 255, 255), Color.Black, Modifier.fillMaxWidth())
+                    BotaoBanner(
+                        "↓ Baixar",
+                        Color(255, 255, 255),
+                        Color.Black,
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable(
+                                onClick = {
+                                    filmeViewModel.baixar()
+                                    Toast.makeText(context, "Download concluido", Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                    )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
                         text = "Descricao do filme",
@@ -102,14 +107,49 @@ fun TelaFilme(irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: ()
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "Um grupo de adolescentes de Outer Banks sai em busca de um tesouro lendario ligado ao desaparecimento do pai de um deles.",
+                        text = "Assista ${filmeViewModel.filmeAtual} na Netflix. Baixe para ver sem internet.",
                         color = Color(179, 179, 179),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = novoNome,
+                        onValueChange = { novoNome = it },
+                        placeholder = { Text("Novo nome do filme") }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Button(
+                            onClick = {
+                                if (novoNome != "") {
+                                    filmeViewModel.renomear(novoNome)
+                                    novoNome = ""
+                                }
+                            }
+                        ) {
+                            Text("Salvar nome")
+                        }
+
+                        Button(
+                            onClick = {
+                                filmeViewModel.excluir()
+                                irParaInicio()
+                            }
+                        ) {
+                            Text("Excluir filme")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
                         text = "Recomendacoes",
@@ -123,9 +163,15 @@ fun TelaFilme(irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: ()
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Cartaz("O MENTALISTA", Color(140, 28, 19), "", {})
-                        Cartaz("THE VAMPIRE DIARIES", Color(46, 42, 79), "", {})
-                        Cartaz("BIRD BOX", Color(75, 96, 67), "", {})
+                        Cartaz("O Mentalista", Color(140, 28, 19), "") {
+                            filmeViewModel.selecionar("O Mentalista")
+                        }
+                        Cartaz("The Vampire Diaries", Color(46, 42, 79), "") {
+                            filmeViewModel.selecionar("The Vampire Diaries")
+                        }
+                        Cartaz("Bird Box", Color(75, 96, 67), "") {
+                            filmeViewModel.selecionar("Bird Box")
+                        }
                     }
                 }
             }
