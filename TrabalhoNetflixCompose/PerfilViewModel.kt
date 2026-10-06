@@ -10,6 +10,17 @@ class PerfilViewModel : ViewModel() {
 
     val perfis = mutableStateListOf("Manu", "Rsjr", "buarda", "lau", "Gabi")
 
+    val nomesAdmin = mutableStateListOf(
+        "admin", "admiN", "admIn", "admIN",
+        "adMin", "adMiN", "adMIn", "adMIN",
+        "aDmin", "aDmiN", "aDmIn", "aDmIN",
+        "aDMin", "aDMiN", "aDMIn", "aDMIN",
+        "Admin", "AdmiN", "AdmIn", "AdmIN",
+        "AdMin", "AdMiN", "AdMIn", "AdMIN",
+        "ADmin", "ADmiN", "ADmIn", "ADmIN",
+        "ADMin", "ADMiN", "ADMIn", "ADMIN"
+    )
+
     var perfilAtual by mutableStateOf("lau")
         private set
 

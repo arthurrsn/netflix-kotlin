@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaFilme(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
+fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBuscar: () -> Unit, irParaMenu: () -> Unit) {
 
     var novoNome by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -115,41 +115,45 @@ fun TelaFilme(filmeViewModel: FilmeViewModel, irParaInicio: () -> Unit, irParaBu
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = novoNome,
-                        onValueChange = { novoNome = it },
-                        placeholder = { Text("Novo nome do filme") }
-                    )
+                    viewModel.nomesAdmin.forEach {
+                        if (it == viewModel.perfilAtual) {
+                            TextField(
+                                modifier = Modifier.fillMaxWidth(),
+                                value = novoNome,
+                                onValueChange = { novoNome = it },
+                                placeholder = { Text("Novo nome do filme") }
+                            )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(8.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Button(
-                            onClick = {
-                                if (novoNome != "") {
-                                    filmeViewModel.renomear(novoNome)
-                                    novoNome = ""
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
+                                Button(
+                                    onClick = {
+                                        if (novoNome != "") {
+                                            filmeViewModel.renomear(novoNome)
+                                            novoNome = ""
+                                        }
+                                    }
+                                ) {
+                                    Text("Salvar nome")
+                                }
+
+                                Button(
+                                    onClick = {
+                                        filmeViewModel.excluir()
+                                        irParaInicio()
+                                    }
+                                ) {
+                                    Text("Excluir filme")
                                 }
                             }
-                        ) {
-                            Text("Salvar nome")
-                        }
 
-                        Button(
-                            onClick = {
-                                filmeViewModel.excluir()
-                                irParaInicio()
-                            }
-                        ) {
-                            Text("Excluir filme")
+                            Spacer(modifier = Modifier.height(12.dp))
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
                         text = "Recomendacoes",

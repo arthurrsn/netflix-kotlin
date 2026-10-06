@@ -46,7 +46,7 @@ fun App() {
             TelaBuscar(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
         }
         if (tela == "filme") {
-            TelaFilme(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
+            TelaFilme(viewModel = viewModel, filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
         }
         if (tela == "downloads") {
             TelaDownloads(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
