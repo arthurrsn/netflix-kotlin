@@ -51,7 +51,7 @@ fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, i
 
                 Text(
                     text = viewModel.perfilAtual,
-                    color = Color(255, 255, 255),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -87,7 +87,7 @@ fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, i
             ) {
                 Text(
                     text = "Editar perfil",
-                    color = Color(255, 255, 255),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(12.dp)
                 )
@@ -108,7 +108,7 @@ fun TelaMenu(viewModel: PerfilViewModel, voltar: () -> Unit, sair: () -> Unit, i
 
         Text(
             text = "Versao: 18.46.1 (17)",
-            color = Color(122, 122, 122),
+            color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
@@ -139,7 +139,7 @@ fun Cabecalho(titulo: String, voltar: () -> Unit) {
         }
         Text(
             text = titulo,
-            color = Color(255, 255, 255),
+            color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
@@ -163,12 +163,12 @@ fun ItemMenu(texto: String, aoClicar: () -> Unit) {
         ) {
             Text(
                 text = texto,
-                color = Color(255, 255, 255),
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = ">",
-                color = Color(179, 179, 179),
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyLarge
             )
         }

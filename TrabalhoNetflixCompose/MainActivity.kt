@@ -7,13 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
-    var tela by remember { mutableStateOf("perfis") }
+    val navController = rememberNavController()
     val viewModel: PerfilViewModel = viewModel()
     val filmeViewModel: FilmeViewModel = viewModel()
 
@@ -36,26 +35,75 @@ fun App() {
         modifier = Modifier.fillMaxSize(),
         color = Color.Black
     ) {
-        if (tela == "perfis") {
-            TelaPerfis(viewModel = viewModel, irParaInicio = { tela = "inicio" })
-        }
-        if (tela == "inicio") {
-            TelaInicio(viewModel = viewModel, filmeViewModel = filmeViewModel, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
-        }
-        if (tela == "buscar") {
-            TelaBuscar(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
-        }
-        if (tela == "filme") {
-            TelaFilme(viewModel = viewModel, filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" })
-        }
-        if (tela == "downloads") {
-            TelaDownloads(filmeViewModel = filmeViewModel, irParaInicio = { tela = "inicio" }, irParaBuscar = { tela = "buscar" }, irParaMenu = { tela = "menu" }, irParaFilme = { tela = "filme" })
-        }
-        if (tela == "menu") {
-            TelaMenu(viewModel = viewModel, voltar = { tela = "inicio" }, sair = { tela = "perfis" }, irParaEditar = { tela = "editar" }, irParaDownloads = { tela = "downloads" })
-        }
-        if (tela == "editar") {
-            TelaEditarPerfil(viewModel = viewModel, voltar = { tela = "menu" }, irParaPerfis = { tela = "perfis" })
+        NavHost(
+            navController = navController,
+            startDestination = "perfis"
+        ) {
+
+            composable("perfis") {
+                TelaPerfis(
+                    viewModel = viewModel,
+                    irParaInicio = { navController.navigate("inicio") }
+                )
+            }
+
+            composable("inicio") {
+                TelaInicio(
+                    viewModel = viewModel,
+                    filmeViewModel = filmeViewModel,
+                    irParaBuscar = { navController.navigate("buscar") },
+                    irParaMenu = { navController.navigate("menu") },
+                    irParaFilme = { navController.navigate("filme") }
+                )
+            }
+
+            composable("buscar") {
+                TelaBuscar(
+                    filmeViewModel = filmeViewModel,
+                    irParaInicio = { navController.navigate("inicio") },
+                    irParaMenu = { navController.navigate("menu") },
+                    irParaFilme = { navController.navigate("filme") }
+                )
+            }
+
+            composable("filme") {
+                TelaFilme(
+                    viewModel = viewModel,
+                    filmeViewModel = filmeViewModel,
+                    irParaInicio = { navController.navigate("inicio") },
+                    irParaBuscar = { navController.navigate("buscar") },
+                    irParaMenu = { navController.navigate("menu") }
+                )
+            }
+
+            composable("downloads") {
+                TelaDownloads(
+                    filmeViewModel = filmeViewModel,
+                    irParaInicio = { navController.navigate("inicio") },
+                    irParaBuscar = { navController.navigate("buscar") },
+                    irParaMenu = { navController.navigate("menu") },
+                    irParaFilme = { navController.navigate("filme") }
+                )
+            }
+
+            composable("menu") {
+                TelaMenu(
+                    viewModel = viewModel,
+                    voltar = { navController.popBackStack() },
+                    sair = { navController.navigate("perfis") },
+                    irParaEditar = { navController.navigate("editar") },
+                    irParaDownloads = { navController.navigate("downloads") }
+                )
+            }
+
+            composable("editar") {
+                TelaEditarPerfil(
+                    viewModel = viewModel,
+                    voltar = { navController.popBackStack() },
+                    irParaPerfis = { navController.navigate("perfis") }
+                )
+            }
+
         }
     }
 }

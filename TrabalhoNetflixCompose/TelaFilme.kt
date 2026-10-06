@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -55,7 +56,7 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                     Box(contentAlignment = Alignment.Center) {
                         Text(
                             text = "▶ Assistir",
-                            color = Color(255, 255, 255),
+                            color = MaterialTheme.colorScheme.onPrimary,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
@@ -65,30 +66,36 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                 Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     Text(
                         text = filmeViewModel.filmeAtual,
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
 
                     filmeViewModel.baixados.forEach {
                         if (it == filmeViewModel.filmeAtual) {
-                            Text(
-                                text = "Baixado",
-                                color = Color(46, 158, 91),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold
-                            )
+                            Surface(
+                                shape = RoundedCornerShape(4.dp),
+                                color = Color(46, 158, 91)
+                            ) {
+                                Text(
+                                    text = "Baixado",
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(4.dp)
+                                )
+                            }
+                        } else {
+                            Spacer(modifier = Modifier.height(0.dp))
                         }
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    BotaoBanner("▶ Assistir", Color(255, 255, 255), Color.Black, Modifier.fillMaxWidth())
+                    BotaoBanner("▶ Assistir", Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.height(8.dp))
                     BotaoBanner(
                         "↓ Baixar",
-                        Color(255, 255, 255),
-                        Color.Black,
                         Modifier
                             .fillMaxWidth()
                             .clickable(
@@ -103,13 +110,13 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
 
                     Text(
                         text = "Descricao do filme",
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "Assista ${filmeViewModel.filmeAtual} na Netflix. Baixe para ver sem internet.",
-                        color = Color(179, 179, 179),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyMedium
                     )
 
@@ -132,7 +139,9 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                             ) {
                                 Button(
                                     onClick = {
-                                        if (novoNome != "") {
+                                        if (novoNome == "") {
+                                            Toast.makeText(context, "Digite um nome", Toast.LENGTH_SHORT).show()
+                                        } else {
                                             filmeViewModel.renomear(novoNome)
                                             novoNome = ""
                                         }
@@ -152,12 +161,14 @@ fun TelaFilme(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPara
                             }
 
                             Spacer(modifier = Modifier.height(12.dp))
+                        } else {
+                            Spacer(modifier = Modifier.height(0.dp))
                         }
                     }
 
                     Text(
                         text = "Recomendacoes",
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )

@@ -79,7 +79,7 @@ fun TelaEditarPerfil(viewModel: PerfilViewModel, voltar: () -> Unit, irParaPerfi
             ) {
                 Text(
                     text = "  Reproduzir proximo episodio",
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Checkbox(
@@ -103,7 +103,7 @@ fun TelaEditarPerfil(viewModel: PerfilViewModel, voltar: () -> Unit, irParaPerfi
             ) {
                 Text(
                     text = "  Reproduzir previas",
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Checkbox(
@@ -121,7 +121,9 @@ fun TelaEditarPerfil(viewModel: PerfilViewModel, voltar: () -> Unit, irParaPerfi
         ) {
             Button(
                 onClick = {
-                    if (campo != "") {
+                    if (campo == "") {
+                        Toast.makeText(context, "Digite um nome", Toast.LENGTH_SHORT).show()
+                    } else {
                         viewModel.renomear(campo)
                         Toast.makeText(context, "Perfil salvo: $campo", Toast.LENGTH_SHORT).show()
                     }

@@ -37,16 +37,22 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "N",
-                        color = Color(229, 9, 20),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = Color(229, 9, 20)
+                    ) {
+                        Text(
+                            text = "N",
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "Para ${viewModel.perfilAtual}",
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -79,19 +85,19 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "GRAND THEFT AUTO",
-                                color = Color(255, 255, 255),
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = "UM OLHAR ESTENDIDO",
-                                color = Color(255, 255, 255),
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Text(
                                 text = "Estreia exclusiva",
-                                color = Color(255, 255, 255),
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(12.dp))
@@ -100,8 +106,8 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceAround
                             ) {
-                                BotaoBanner("Assistir", Color(255, 255, 255), Color.Black, Modifier.width(140.dp))
-                                BotaoBanner("+ Minha lista", Color(0, 0, 0, 85), Color(255, 255, 255), Modifier.width(140.dp))
+                                BotaoBanner("Assistir", Modifier.width(140.dp))
+                                BotaoBanner("+ Minha lista", Modifier.width(140.dp))
                             }
                         }
                     }
@@ -111,7 +117,7 @@ fun TelaInicio(viewModel: PerfilViewModel, filmeViewModel: FilmeViewModel, irPar
 
                 Text(
                     text = "Series dramaticas",
-                    color = Color(255, 255, 255),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -150,7 +156,7 @@ fun Filtro(texto: String) {
     ) {
         Text(
             text = texto,
-            color = Color(255, 255, 255),
+            color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(10.dp)
         )
@@ -158,16 +164,16 @@ fun Filtro(texto: String) {
 }
 
 @Composable
-fun BotaoBanner(texto: String, cor: Color, corTexto: Color, modifier: Modifier) {
+fun BotaoBanner(texto: String, modifier: Modifier) {
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(6.dp),
-        color = cor
+        color = Color(255, 255, 255)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = texto,
-                color = corTexto,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(10.dp)
             )
@@ -193,7 +199,7 @@ fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
                 Surface(color = Color(229, 9, 20)) {
                     Text(
                         text = selo,
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(2.dp)
@@ -205,7 +211,7 @@ fun Cartaz(titulo: String, cor: Color, selo: String, aoClicar: () -> Unit) {
 
             Text(
                 text = titulo,
-                color = Color(255, 255, 255),
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(3.dp)
@@ -223,7 +229,7 @@ fun ItemBarra(texto: String, tela: String, telaAtual: String, aoClicar: () -> Un
     ) {
         Text(
             text = texto,
-            color = if (tela == telaAtual) Color.Black else Color(179, 179, 179),
+            color = if (tela == telaAtual) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(10.dp)
         )
@@ -253,7 +259,7 @@ fun BarraInferior(telaAtual: String, irParaInicio: () -> Unit, irParaBuscar: () 
                 Avatar(Color(232, 176, 4), Modifier.size(24.dp))
                 Text(
                     text = "Minha Netflix",
-                    color = Color(255, 255, 255),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

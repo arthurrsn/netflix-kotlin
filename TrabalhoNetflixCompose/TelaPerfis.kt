@@ -1,5 +1,6 @@
 package com.example.netflix
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -38,6 +40,7 @@ import androidx.compose.ui.unit.dp
 fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
 
     var novoPerfil by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
         Surface(
@@ -49,16 +52,16 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Time("SF", Color(170, 0, 0), Color(255, 255, 255))
+                Time("SF", Color(170, 0, 0))
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(
                     text = "VS",
-                    color = Color(255, 255, 255),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.displayMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(20.dp))
-                Time("LA", Color(255, 199, 44), Color.Black)
+                Time("LA", Color(200, 140, 0))
             }
         }
 
@@ -66,22 +69,28 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "NETFLIX",
-                color = Color(229, 9, 20),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
-            )
+            Surface(
+                shape = RoundedCornerShape(4.dp),
+                color = Color(229, 9, 20)
+            ) {
+                Text(
+                    text = "NETFLIX",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
             Text(
                 text = "GAMEDAY",
-                color = Color(255, 255, 255),
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Escolha o seu perfil",
-                color = Color(179, 179, 179),
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyLarge
             )
 
@@ -97,7 +106,9 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
                     onClick = {
-                        if (novoPerfil != "") {
+                        if (novoPerfil == "") {
+                            Toast.makeText(context, "Digite um nome", Toast.LENGTH_SHORT).show()
+                        } else {
                             viewModel.adicionar(novoPerfil)
                             novoPerfil = ""
                         }
@@ -131,7 +142,7 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(
                         text = it,
-                        color = Color(255, 255, 255),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -143,7 +154,7 @@ fun TelaPerfis(viewModel: PerfilViewModel, irParaInicio: () -> Unit) {
 }
 
 @Composable
-fun Time(sigla: String, cor: Color, corTexto: Color) {
+fun Time(sigla: String, cor: Color) {
     Surface(
         modifier = Modifier.size(96.dp),
         shape = RoundedCornerShape(48.dp),
@@ -152,7 +163,7 @@ fun Time(sigla: String, cor: Color, corTexto: Color) {
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = sigla,
-                color = corTexto,
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -186,7 +197,7 @@ fun Perfil(nome: String, cor: Color, modifier: Modifier, aoClicar: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = nome,
-            color = Color(179, 179, 179),
+            color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium
         )
     }
